@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: currency
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/invoices
+    username: 'postgres'
+    password: '123456Az'
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    enabled: false
+    drop-first: false
+    default-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yml
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+server:
+  port: 8089
+  http2:
+    enabled: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+

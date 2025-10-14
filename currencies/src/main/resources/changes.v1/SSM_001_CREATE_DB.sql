@@ -1,0 +1,4 @@
+CREATE DATABASE currencies;
+CREATE USER currency WITH PASSWORD '0000';
+GRANT ALL PRIVILEGES ON DATABASE currencies TO currency;
+
