@@ -2,16 +2,14 @@ package com.babacar.app.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "invoice_products",schema = "public")
+@Builder
 public class InvoiceProducts {
 
     @Id
@@ -38,15 +36,12 @@ public class InvoiceProducts {
     @Column(name = "total_price")
     private double totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "invoice_id")
-    @JsonBackReference
-    private Invoices invoice;
-
     @Column(name = "discount_type")
     private String discountType;
 
-    @ManyToOne(optional = false)
-    private Invoices invoices;
+    @ManyToOne
+    @JoinColumn(name = "invoice")
+    @JsonBackReference
+    private Invoices invoice;
 
 }

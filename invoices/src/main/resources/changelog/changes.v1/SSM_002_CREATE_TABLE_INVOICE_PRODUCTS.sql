@@ -9,9 +9,5 @@ CREATE TABLE invoice_products (
                                   taxe DOUBLE PRECISION,
                                   total_price DOUBLE PRECISION,
                                   discount_type VARCHAR(100),
-                                  invoice_id BIGINT,
-                                  CONSTRAINT fk_invoice
-                                      FOREIGN KEY (invoice_id)
-                                          REFERENCES public.invoices(id)
-                                          ON DELETE CASCADE
+                                  invoice VARCHAR(50)
 );

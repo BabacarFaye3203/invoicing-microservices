@@ -1,9 +1,6 @@
 package com.babacar.app.dto.responses;
 
-import com.babacar.app.entities.InvoicePayments;
-import com.babacar.app.entities.InvoicePricing;
 import com.babacar.app.entities.InvoiceProducts;
-import com.babacar.app.entities.InvoiceServices;
 import lombok.Builder;
 
 import java.io.Serializable;
@@ -21,7 +18,8 @@ public record CreateInvoiceResponse(
         LocalDateTime creationDate,
         String note,
         String individualCustomer,
-        String enterpriseCustomer
+        String currency,
+        List<InvoiceProducts> invoiceProducts
 
 ) implements Serializable {
 }

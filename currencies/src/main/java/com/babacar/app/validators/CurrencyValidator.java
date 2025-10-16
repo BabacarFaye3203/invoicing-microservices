@@ -12,12 +12,8 @@ import org.springframework.stereotype.Service;
 public class CurrencyValidator {
     private final CurrencyRepository currencyRepository;
 
-    public Currency validate(String uuid){
-
-        Currency currency=currencyRepository.findByUuid(uuid).get();
-        if (currency.getName().contains(CurrencyConstants.VALID_CURRENCY)){
-            return currency;
-        }else {
+    public void validate(String uuid){
+        if (uuid.contains(CurrencyConstants.VALID_CURRENCY)){
             throw  new RuntimeException("invalid currency");
         }
 

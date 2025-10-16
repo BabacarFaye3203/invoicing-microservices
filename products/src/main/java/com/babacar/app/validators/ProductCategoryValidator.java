@@ -13,16 +13,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductCategoryValidator {
     private final ProductRepository productRepository;
-    public String validate(String product_uuid) {
-        Products products= productRepository.findByUuid(product_uuid)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "product no found"
-                ));
-        String category= products.getCategory();
-        if (category.contains(ProductCategoryConstants.VALID_PRODUCT_CATEGORIES)){
-            return category;
-        }else {
-            throw new EntityNotFoundException("product category does not exists");
+    public void validate(String category) {
+
+        if (!category.contains(ProductCategoryConstants.VALID_PRODUCT_CATEGORIES)){
+            throw new IllegalStateException("category is not valid");
         }
     }
 }

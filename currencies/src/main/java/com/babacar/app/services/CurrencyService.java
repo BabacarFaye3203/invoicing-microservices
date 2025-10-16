@@ -22,39 +22,25 @@ public class CurrencyService {
 
     public CurrencyResponse create(CreateCurrencyRequest request){
 
-        Currency validCurrency=currencyValidator.validate(request.name());
+        this.currencyValidator.validate(request.name());
         Currency currency =new Currency();
         String generatedUuid= UUID.randomUUID().toString();
-
         currency.setUuid(generatedUuid);
-        currency.setName(currency.getName());
+        currency.setName(request.name());
         currency.setDescription(request.description());
         currency.setActive(request.isActive());
         currencyRepository.save(currency);
 
-        CurrencyResponse response= currencyMapper.toCurrencyResponse(currency);
-
-        return  response;
+        return  currencyMapper.toCurrencyResponse(currency);
 
     }
 
-    public CurrencyResponse getCurrency(String uuid){
-
-        Optional<Currency> currency=currencyRepository.findByUuid(uuid);
-
-        if(currency.isPresent()){
-            CurrencyResponse response= currencyMapper.toCurrencyResponse(currency.get());
-            return response;
-        }
-
-        return null;
-    }
 
     public void markAsActive(String uuid){
-        Optional<Currency> currency=currencyRepository.findByUuid(uuid);
+       Currency currency=currencyRepository.findByUuid(uuid).orElseThrow(
+                ()->new NoSuchElementException("currency not found")
+        );
+        currency.setActive(true);
 
-        if (currency.isPresent()){
-            currency.get().setActive(true);
-        }
     }
 }

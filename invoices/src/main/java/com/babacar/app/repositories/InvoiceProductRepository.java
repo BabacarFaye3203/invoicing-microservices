@@ -1,0 +1,10 @@
+package com.babacar.app.repositories;
+
+import com.babacar.app.entities.InvoiceProducts;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface InvoiceProductRepository extends JpaRepository<InvoiceProducts,Long> {
+    Optional<InvoiceProducts>  findByUuid(String uuid);
+}

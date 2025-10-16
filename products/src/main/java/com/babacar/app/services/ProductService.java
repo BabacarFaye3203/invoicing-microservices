@@ -3,7 +3,6 @@ package com.babacar.app.services;
 import com.babacar.app.dto.requests.CreateProductRequest;
 import com.babacar.app.dto.responses.ProductResponse;
 import com.babacar.app.entities.Products;
-import com.babacar.app.mappers.ProductMapper;
 import com.babacar.app.repositories.ProductRepository;
 import com.babacar.app.validators.ProductCategoryValidator;
 import lombok.RequiredArgsConstructor;
@@ -20,25 +19,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductCategoryValidator productCategoryValidator;
 
-    public ProductResponse createProduct(CreateProductRequest request, MultipartFile file) throws IOException {
+    public ProductResponse createProduct(CreateProductRequest request) throws IOException {
 
-        String productCategory=productCategoryValidator.validate(request.category());
         Products products = new Products();
         products.setUuid(UUID.randomUUID().toString());
-        products.setCategory(productCategory);
+        products.setCategory(request.category());
         products.setName(request.name());
         products.setPrice(request.price());
         products.setDescription(request.description());
 
-        Path path= Paths.get(System.getProperty("Utilisateurs.babacar"),"products_file");
-        if (!(Files.exists(path))){
-            Files.createDirectories(path);
-        }
-        Path filePath= Paths.get(System.getProperty("Utilisateurs.babacar"),"products_file"+UUID.randomUUID().toString()+".pdf");
-        Files.copy(file.getInputStream(),filePath);
-        products.setImage(filePath.toUri().toString());
+//        Path path= Paths.get(System.getProperty("Utilisateurs.babacar"),"products_file");
+//        if (!(Files.exists(path))){
+//            Files.createDirectories(path);
+//        }
+//        Path filePath= Paths.get(System.getProperty("Utilisateurs.babacar"),"products_file"+UUID.randomUUID().toString()+".pdf");
+//        Files.copy(file.getInputStream(),filePath);
+//        products.setImage(filePath.toUri().toString());
         productRepository.save(products);
         products.setStockLevel(products.getStockLevel()+1);
         productRepository.save(products);

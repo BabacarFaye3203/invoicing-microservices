@@ -2,6 +2,7 @@ package com.babacar.app.controllers;
 
 import com.babacar.app.dto.requests.CreateProductRequest;
 import com.babacar.app.dto.responses.ProductResponse;
+import com.babacar.app.services.GetProductService;
 import com.babacar.app.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,20 @@ import java.io.IOException;
 public class ProductController {
 
     private final ProductService productService;
+    private final GetProductService getProductService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping
     @Operation(summary = "creation of a product")
     public ProductResponse create(
-            @RequestPart("request") CreateProductRequest request,
-            @RequestParam MultipartFile file) throws IOException {
-        return productService.createProduct(request,file);
+            @RequestBody CreateProductRequest request) throws IOException {
+        return productService.createProduct(request);
+    }
+
+    @GetMapping("/{uuid}")
+    @Operation(summary = "get a product by uuid")
+    public ProductResponse getProduct(
+            @PathVariable(name = "uuid") String uuid){
+        return getProductService.getProduct(uuid);
     }
 
 }

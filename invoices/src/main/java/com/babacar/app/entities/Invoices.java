@@ -1,6 +1,5 @@
 package com.babacar.app.entities;
 
-import com.babacar.app.enums.PaymentMethod;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,9 +48,6 @@ public class Invoices {
     @Column(name = "individual_customer")
     private String individualCustomer;
 
-    @Column(name = "enterprise_customer")
-    private String enterpriseCustomer;
-
     @OneToMany(
             mappedBy = "invoice",
             cascade = CascadeType.ALL,
@@ -61,25 +57,7 @@ public class Invoices {
     @JsonManagedReference
     private List<InvoiceProducts> invoiceProducts= new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "invoice",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false,
-            fetch = FetchType.LAZY
-    )
-    @JsonManagedReference
-    private List<InvoiceServices> invoiceServices;
+    @Column(name = "currency")
+    String currency;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "invoice_pricing")
-    private InvoicePricing invoicePricing;
-
-    @OneToMany(
-            mappedBy = "invoice",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false,
-            fetch = FetchType.LAZY
-    )
-    @JsonManagedReference
-    private List<InvoicePayments> invoicePayments;
 }

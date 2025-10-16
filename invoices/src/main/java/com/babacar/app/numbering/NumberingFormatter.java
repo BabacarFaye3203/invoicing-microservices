@@ -8,7 +8,7 @@ import java.time.ZoneId;
 
 public interface NumberingFormatter {
     static String getFormattedNumber(String lang, Integer number){
-        int year = LocalDate.now(ZoneId.of("Casablanca/Africa")).getYear();
+        int year = LocalDate.now(ZoneId.of("Africa/Casablanca")).getYear();
          return NumberPrefixConstant.INVOICE_PREFIX + year + "-" + number;
     }
 }
