@@ -3,6 +3,7 @@ package com.babacar.app.services;
 import com.babacar.app.dto.request.CreateInvoiceRequest;
 import com.babacar.app.dto.responses.CreateInvoiceResponse;
 import com.babacar.app.dto.responses.CurrencyResponse;
+import com.babacar.app.dto.responses.PaymentResponse;
 import com.babacar.app.dto.responses.ProductResponse;
 import com.babacar.app.entities.InvoiceProducts;
 import com.babacar.app.entities.Invoices;
@@ -13,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -38,49 +38,55 @@ public class InvoiceService {
         invoices.setIndividualCustomer(request.individualCustomer());
         this.documentNumbering.manageNumbering(invoices,request.number());
 
-        String uuid=UUID.randomUUID().toString();
         List<InvoiceProducts> invoiceProducts= request.invoiceProducts().stream().map(
 
                 dtos->{
                     ProductResponse response=restTemplate.getForObject(
                             "http://localhost:8086/products/{uuid}",
                             ProductResponse.class,
-                            dtos.getProduct()
+                            dtos.product()
                     );
                     InvoiceProducts invoice=InvoiceProducts.builder()
-                            .uuid(uuid)
+                            .uuid(UUID.randomUUID().toString())
                             .product(response.uuid())
-                            .invoice(dtos.getInvoice())
-                            .taxe(dtos.getTaxe())
+                            .invoice(invoices)
+                            .taxe(dtos.taxe())
                             .designation(response.name())
-                            .discount(dtos.getDiscount())
-                            .quantity(dtos.getQuantity())
-                            .discountType(dtos.getDiscountType())
+                            .discount(dtos.discount())
+                            .quantity(dtos.quantity())
+                            .discountType(dtos.discountType())
                             .unitPrice(response.price())
-                            .totalPrice(response.price()*dtos.getQuantity())
+                            .totalPrice(response.price()*dtos.quantity())
                             .build();
 
                     return invoice;
                 }
-
         ).collect(Collectors.toList());
+        invoices.setInvoiceProducts(invoiceProducts);
+
+        PaymentResponse response=restTemplate.postForObject(
+                "http://localhost:8084/payments/create",
+                request.invoicePayments(),
+                PaymentResponse.class
+        );
 
         invoices.setInvoiceProducts(invoiceProducts);
+        invoices.setPayment(response.uuid());
+
         invoiceRepository.save(invoices);
 
-        CurrencyResponse response =restTemplate.getForObject(
+        CurrencyResponse currencyResponse =restTemplate.getForObject(
                 "http://localhost:8087/api/v1/currencies/{uuid}",
                 CurrencyResponse.class,
                 request.currency()
         );
 
-        if (!request.currency().equals(response.uuid())){
+        if (!request.currency().equals(currencyResponse.uuid())){
             throw new BadRequestException("currency does not match");
         }else{
-            invoices.setCurrency(response.uuid());
+            invoices.setCurrency(currencyResponse.uuid());
             invoiceRepository.save(invoices);
         }
-
         return invoiceMapper.toCreateInvoiceResponse(invoices);
     }
 }

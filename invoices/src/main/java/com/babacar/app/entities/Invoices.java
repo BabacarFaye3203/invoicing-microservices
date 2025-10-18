@@ -57,6 +57,8 @@ public class Invoices {
     @JsonManagedReference
     private List<InvoiceProducts> invoiceProducts= new ArrayList<>();
 
+    private String Payment;
+
     @Column(name = "currency")
     String currency;
 

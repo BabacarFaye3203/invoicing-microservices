@@ -13,6 +13,8 @@
         <module>products</module>
         <module>currencies</module>
         <module>eureka-server</module>
+        <module>IndividualCostumer</module>
+        <module>payments</module>
     </modules>
 
     <properties>

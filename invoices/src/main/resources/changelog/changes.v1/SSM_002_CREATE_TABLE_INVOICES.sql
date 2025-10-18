@@ -7,11 +7,9 @@ CREATE TABLE public.invoices (
                           status VARCHAR(100),
                           creation_date TIMESTAMP,
                           note TEXT,
-                          is_sent BOOLEAN,
                           individual_customer VARCHAR(255),
-                          enterprise_customer VARCHAR(255),
                           invoice_products VARCHAR(255),
-                          invoice_services VARCHAR(255),
-                          invoice_payments VARCHAR(255)
+                          payment VARCHAR(255),
+                          currency varchar(50)
 );
 

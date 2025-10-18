@@ -13,6 +13,7 @@ public class SequentialNumbering {
 
     public String getValidDocumentNumber(String lang, Integer number) throws BadRequestException {
         int i = 0;
+        number=1;
         String invoiceNumber = NumberingFormatter.getFormattedNumber(lang, number);
         while (invoiceRepository.existsByNumber(invoiceNumber)) {
             i += 1;

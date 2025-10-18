@@ -8,6 +8,8 @@
     <file url="file://$PROJECT_DIR$/invoices/src/main/resources/changelog/changes.v1/SSM_002_CREATE_TABLE_INVOICES.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/invoices/src/main/resources/changelog/changes.v1/SSM_002_CREATE_TABLE_INVOICE_PRODUCTS.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/invoices/src/main/resources/changelog/changes.v1/SSM_003_CREATE_TABLE_INVOICE_SERVICES.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/payments/src/main/resources/changelog/changes.v1/SSM_001_CREATE_DB.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/payments/src/main/resources/changelog/changes.v1/SSM_002_CREATE_TABLE_PAYMENTS.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/products/src/main/resources/changelog/changes.v1/ALT_003_ALTER_TABLE_PRODUCTS.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/products/src/main/resources/changelog/changes.v1/SSM_001_CREATE_DB.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/products/src/main/resources/changelog/changes.v1/SSM_002_CREATE_TABLE_PRODUCTS.sql" dialect="PostgreSQL" />

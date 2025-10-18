@@ -1,8 +1,6 @@
 package com.babacar.app.dto.request;
 
 
-import com.babacar.app.entities.InvoiceProducts;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +14,8 @@ public record CreateInvoiceRequest(
     LocalDateTime creationDate,
     String note,
     String individualCustomer,
-    List<InvoiceProducts> invoiceProducts,
+    List<InvoiceProductDto> invoiceProducts,
+    CreatePaymentRequest invoicePayments,
     String currency
 
 ) implements Serializable {

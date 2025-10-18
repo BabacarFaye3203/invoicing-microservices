@@ -2,7 +2,6 @@ package com.babacar.app.services;
 
 import com.babacar.app.dto.request.CreateInvoiceProductRequest;
 import com.babacar.app.dto.responses.CreateInvoiceProductResponse;
-import com.babacar.app.dto.responses.CreateInvoiceResponse;
 import com.babacar.app.dto.responses.ProductResponse;
 import com.babacar.app.entities.InvoiceProducts;
 import com.babacar.app.repositories.InvoiceProductRepository;
